@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView} from 'react-native';
 
 const Dashboard = () => {
 
@@ -11,7 +11,13 @@ const Dashboard = () => {
     }
 
     const handleNewPlayer = () => {
-        setPlayers(currentPlayers => [...currentPlayers, newPlayer])
+        //todo if not empty
+        if(newPlayer.trim() === '') {
+            return;
+        }
+        
+        setPlayers(currentPlayers => [...currentPlayers, newPlayer]);
+        setNewPlayer('');
     }
 
     return (
@@ -25,9 +31,9 @@ const Dashboard = () => {
                 <Button title='Add player'
                         onPress={handleNewPlayer}/>                
             </View>
-            <View style={styles.playersList}>
+            <ScrollView contentContainerStyle={styles.playersList}>
                 {players.map((player) => <Text>{player}</Text>)}
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     addPlayerContainer: {
-        flex: 3,
+        flex: 2,
         justifyContent: 'center',
     },
     addPlayerInput: {
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
       borderBottomWidth: 1,
     },
     playersList: {
-        flex: 2,
+        // flex: 2,
         flexDirection: 'column-reverse',
         justifyContent: 'flex-end',
         alignItems: 'center',
